@@ -1,12 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 use Carbon\Carbon;
-use Morilog\jalali\Jalalian;
+
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Transaction;
 use APP\Models\Package;
+use Morilog\Jalali\Jalalian; 
 use App\Models\referral_code;
 use App\Http\Resources\TransactionResource;
 use Illuminate\Http\Request;
@@ -29,8 +30,8 @@ class TransactionController extends Controller
         'start_date'=>'required|date',
         'end_date'=>'required|date|after_or_equal:start_date',
      ]);
-     $startDate=Jalalian::fromFormat('Y-m-d',$request)->input('start_date')->toCarbon();
-     $endDate=Jalalian::fornFormat('Y-m-d',$request)->input('end_date')->toCarbon();
+     $startDate=Jalalian::fromFormat('Y-m-d H:i:s',$request)->input('start_date')->toCarbon();
+     $endDate=Jalalian::fornFormat('Y-m-d H:i:s',$request)->input('end_date')->toCarbon();
 
        $refcode = Auth::user()->referral_code();
         $refcode1=$refcode->first->code->code;
@@ -50,7 +51,12 @@ class TransactionController extends Controller
     $refcode = Auth::user()->referral_code();
     $refcode1=$refcode->first->code->code;
     $leaderTransactions=Transaction::query()->where($phoneNumber,'mobile')->where('mobile','like','%'.$phoneNumber.'%')->get();
-    return response()->json( TransactionResource::collection ($leaderTransactions));
+    if($leaderTransactions){
+        return response()->json( TransactionResource::collection($leaderTransactions));
+        }
+        else{
+            return response()->json(['message'=>'Not found'],404);
+        }
 }
 
 

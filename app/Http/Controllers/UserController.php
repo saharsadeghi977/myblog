@@ -51,7 +51,7 @@ public function searchUserByPhone(Request $request){
     $refcode1=$refcode->first->code->code;
     $userswithOrders=user::query()->where('identifier_code',$refcode1)->where('mobile','like','%'. $phoneNumber.'%')->whereHas('orders',function($q)  {
         $q->where('statuse','approved');
-    })->get();
+    })->get(); 
     return response()->json($userswithOrders);
     
     

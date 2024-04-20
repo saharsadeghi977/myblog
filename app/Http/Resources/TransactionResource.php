@@ -28,10 +28,10 @@ class TransactionResource extends JsonResource
             
             'transaction_id'=>$this->id,
             'statuse'=>$this->status,
-            'user_name'=>$this->order->user->name ?? null ,
-            'user_lastname'=>$this->order->user->lastname ?? null,
+            'fullname'=>$this->order->user->name ?? null,
+            'lastname' =>$this->order->user->last_name ?? null ,
             'phone'=>$this->order->user->mobile ?? null,
-            'creation'=>$this->creation_date,
+            'creation'=>$this->creation_date, 
             'amount'=>$this->amount,
              'referral_user'=>$this->order->user->identifier_code ?? null,
              'referral_transaction'=>$this->order->referral_code?? null ,
