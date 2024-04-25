@@ -2,10 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
- use App\Http\Controllers\UserController as uc;
- use App\Http\Controllers\TransactionController as tc;
+ use App\Http\Controllers\back\UserController as uc;
+ use App\Http\Controllers\index\BookController as BC;
  use App\Http\Controllers\Auth\Usercontroller as Auc;
- use App\Http\Controllers\OrderController as oc;
+
  
 
 /*
@@ -22,18 +22,9 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-
-Route::get('/users', [uc::class,'index'])->middleware('auth:sanctum');
-Route::get('/transactions', [tc::class,'index'])->middleware('auth:sanctum');
-Route::get('/amountTotal', [tc::class,'amountTotal'])->middleware('auth:sanctum');
-Route::get('/countorderLead', [oc::class,'countorderLead'])->middleware('auth:sanctum');
-Route::get('/countLead', [uc::class,'countLead'])->middleware('auth:sanctum');
-Route::get('/orderLead', [uc::class,'orderLead'])->middleware('auth:sanctum');
-Route::post('/transaction/searchdate', [tc::class,'searchByTimeInterval'])->middleware('auth:sanctum');
-Route::get('/transaction/searchphone', [tc::class,'searchByphone'])->middleware('auth:sanctum');
-Route::get('/userorderlead/searchphone', [uc::class,'searchUserByPhone'])->middleware('auth:sanctum');
-
-
-
+Route::get('/books', [BC::class,'index']);
+Route::get('/users/{user}', [uc::class,'show'])->middleware('auth:sanctum');
+Route::put('/users/{userid}/books/{bookid}', [uc::class,'update'])->middleware('auth:sanctum');
+Route::delete('users/{userid}/books/{bookid}', [uc::class,'destroy'])->middleware('auth:sanctum');
 
 Route::post('/login', [Auc::class, 'login']);

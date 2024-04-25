@@ -13,15 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('books', function (Blueprint $table) {
+
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('country')->unique();
-            $table->tinyInteger('role')->default(2);
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->unsignedInteger("user_id");
+            $table->foreign("user_id")->references("id")->on("users")->cascadeOnDelete();
+            $table->string('title');
+            $table->integer('publication_year')->nullable();
+            $table->decimal('price',8,2)->nullable();
+            $table->integer('number_of_pages')->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('books');
     }
 };
