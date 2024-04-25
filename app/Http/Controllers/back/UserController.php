@@ -27,7 +27,7 @@ class UserController extends Controller
     }
 
     public function destroy($userid,$bookid){
-     $book=Book::where('userid',$userid)->findOrFail($bookid);
+     $book=Book::where('user_id',$userid)->findOrFail($bookid);
      $book->delete();
      return response()->json(null,204);
     }
