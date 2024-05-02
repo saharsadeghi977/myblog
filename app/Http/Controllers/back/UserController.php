@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\back;
 use App\Models\User;
 use App\Models\Book;
+use App\Http\Requests\BookUpdateRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -13,16 +14,12 @@ class UserController extends Controller
         
         return response()->json( $user->books);
     }
-    public function update(Request $request,$userid,$bookid){
+    public function update( BookUpdateRequest $request,$userid,$bookid){
      
-        $validateData = $request->validate([
-            'title' => 'required',
-            'publication_year' =>'required',
-            'price'=>'required',
-            'number_of_pages' =>'nullable'
-        ]);
+       $validatedData=$request->validated();
      $book=Book::where('user_id',$userid)->findOrFail($bookid);
-    $book->fill($validateData);
+    $book->fill($validatedData);
+    $book->save();
      return response()->json($book,200);
     }
 

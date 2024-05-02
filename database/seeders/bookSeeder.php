@@ -16,6 +16,7 @@ class bookSeeder extends Seeder
     public function run()
     {
         //
+        \App\Models\Book::factory(20)->create();
         Book::create([
             'user_id'=>'1',
             'title'=>'کتاب1',
